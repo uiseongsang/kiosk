@@ -1,11 +1,15 @@
 package Assignment;
-
+import java.io.Console;
 import java.util.*;
 
 public class Main {
     private static Scanner sc = new Scanner(System.in);
     private static int count = 0;
+    private static int totalMount;
+    private static List<Order> totalOrderList = new ArrayList<>();
+
     private static void printMenu(Menu[] arr) {
+        System.out.println();
         System.out.println("| --------------- 정보 --------------");
         System.out.println("|             [ 메뉴 ]");
         for(int i = 0; i < arr.length; i++){
@@ -57,6 +61,8 @@ public class Main {
         }
         if(select == 1) {
             // 장바구니 비우기
+            totalMount += total; // 총 금액 저장
+            for(Order o : list) totalOrderList.add(o);
             list.clear();
             System.out.println("주문이 완료되었습니다!");
             count++;
@@ -110,8 +116,15 @@ public class Main {
         while(true){
             printMenu(menus);
             int selectMenu = sc.nextInt();
-
             switch (selectMenu){
+                case 0:
+                    System.out.println("[ 총 판매금액 현황 ]");
+                    System.out.println("현재까지 총 판매된 금액은 [ " + totalMount + "원 ] 입니다.");
+                    System.out.println();
+                    System.out.println("[ 총 판매상품 목록 현황 ]");
+                    System.out.println("현재까지 총 판매된 상품 목록은 아래와 같습니다.");
+                    for(Order totalOrder : totalOrderList) System.out.println(totalOrder);
+                    break;
                 case 1:
                     System.out.println("| ---------------- 김밥정보 ----------------");
                     break;
