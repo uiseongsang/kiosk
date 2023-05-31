@@ -1,8 +1,5 @@
 package Assignment;
 
-import javax.xml.namespace.QName;
-import java.util.Scanner;
-
 // 이름, 설명 필드
 public class Menu {
     private String name;
