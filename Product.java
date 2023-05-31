@@ -1,15 +1,15 @@
 package Assignment;
 
 public class Product extends Menu {
-    private double price;
+    private int price;
     public Product(){
 
     }
-    public Product(String name, String desc, double price){
+    public Product(String name, String desc, int price){
         super(name,desc);
         this.price = price;
     }
-    public double getPrice(){
+    public int getPrice(){
         return price;
     }
     @Override
