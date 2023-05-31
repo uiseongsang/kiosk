@@ -6,13 +6,14 @@ public class Main {
     private static Scanner sc = new Scanner(System.in);
     private static int count = 0;
     private static void printMenu(Menu[] arr) {
-        System.out.println("| ------------ 메뉴정보 ------------");
+        System.out.println("| --------------- 정보 --------------");
+        System.out.println("|             [ 메뉴 ]");
         for(int i = 0; i < arr.length; i++){
             System.out.println("| " + (i+1) + ". " + arr[i]);
         }
         System.out.println("|             [ 주문 ]");
-        System.out.println("| 5. 주문하기        - 장바구니를 확인 하겠습니다"); // 총 장바구니
-        System.out.println("| 6. 주문취소하기     - 진행중인 주문을 취소합니다"); // 장바구니 초기화
+        System.out.println("| 5. 주문하기     - 장바구니를 확인 하겠습니다"); // 총 장바구니
+        System.out.println("| 6. 주문취소하기  - 진행중인 주문을 취소합니다"); // 장바구니 초기화
         System.out.println("| ---------------------------------");
         System.out.print("입력: ");
     }
@@ -103,7 +104,6 @@ public class Main {
                 new Product("환타","파인애플맛 환타",1000)
         };
         int selectProduct;
-        List<Product> shoppingCart = new ArrayList<>();
         Product[][] productArr = {kimbob,ramen,udon,drinks}; // 객체 배열
         List<Order> orderList = new ArrayList<>();
 
@@ -131,13 +131,28 @@ public class Main {
 
                 printProduct(product); // 선택한 상품정보 출력
                 selectProduct = sc.nextInt();
+                Product selectedProduct = product[selectProduct-1];
 
                 // 유저가 선택한 해당 김밥정보를 Order 쪽에 넘겨주기 -> 매번 갈아껴주는게 좋은 코드인가???
-                Order order = new Order(product[selectProduct-1].getName(),product[selectProduct-1].getDesc(),product[selectProduct-1].getPrice(),1);
-                System.out.println("'" + product[selectProduct-1] + "'"); // 선택 메뉴 표시
+                Order order = new Order(selectedProduct.getName(),selectedProduct.getDesc(),selectedProduct.getPrice(),1);
+                System.out.println("'" + selectedProduct + "'"); // 선택 메뉴 정보 표시(이름,설명,가격)
+
+                if(selectMenu == 2 || selectMenu == 3) {
+                    // 상품옵션 기능 추가 - 곱배기 (라면,우동 한정)
+                    System.out.println("곱배기를 추가하시겠습니까?");
+                    System.out.println("1. 일반(+0원)   2. 곱배기(+500원)");
+                    int selectOption= sc.nextInt();
+                    if(selectOption == 2) {
+                        order.setName(order.getName()+("(곱배기)"));
+                        order.setPrice(order.getPrice()+500);
+                        System.out.println("'" + order + "'"); // 곱배기 선택시 곱배기 가격추가된 메뉴 정보 표시(이름,설명,가격)
+                    }
+                    else{
+                        System.out.println("'" + order + "'"); // 선택 메뉴 정보 표시(이름,설명,가격)
+                    }
+                }
                 int confirmed = order.confirmOreder(); // 장바구니 추가 할지 요청
                 if(confirmed == 1) {
-                    shoppingCart.add(product[selectProduct-1]); // Product ArrayList
                     orderList.add(order); // Order ArrayList
                     System.out.println("해당 상품을 장바구니에 넣었습니다!");
                     System.out.println();
@@ -155,7 +170,7 @@ public class Main {
             }
             else if(selectMenu == 6) {
                 // 장바구니 삭제
-                shoppingCart.clear();
+                orderList.clear();
             }
             else if(selectMenu == 119) {
                 break; // 프로그램 종료

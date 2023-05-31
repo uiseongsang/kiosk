@@ -29,7 +29,7 @@ public class Order extends Product{
     }
     @Override
     public String toString() {
-        return this.getName() + "   - " + this.getDesc() + "   - " + this.getPrice() + " x " + count;
+        return this.getName() + " - " + this.getDesc() + " - " + this.getPrice() + " x " + count + "개";
     }
 
     @Override
