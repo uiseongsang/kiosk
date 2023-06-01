@@ -15,10 +15,10 @@ public class Main {
             System.out.println((i+1) + ". " + arr[i]);
         }
         System.out.println("-------------- 주문정보 --------------");
-        System.out.println("5. 주문하기     - 장바구니를 확인 하겠습니다."); // 총 장바구니
-        System.out.println("6. 주문취소하기  - 진행중인 주문을 취소합니다."); // 장바구니 초기화
+        System.out.println("7. 주문하기     - 장바구니를 확인 하겠습니다."); // 총 장바구니
+        System.out.println("8. 주문취소하기  - 진행중인 주문을 취소합니다."); // 장바구니 초기화
         System.out.println("------------------------------------");
-        System.out.println("7. 종료하기  - 프로그램을 종료합니다.");
+        System.out.println("9. 종료하기  - 프로그램을 종료합니다.");
         System.out.println("0. 통계보기     - 총 판매 및 목록 조회합니다");
         System.out.println("------------------------------------");
         System.out.print("입력: ");
@@ -78,11 +78,13 @@ public class Main {
         System.out.println("'김밥천국'에 오신걸 환영합니다");
         System.out.println("아래의 메뉴정보를 보시고 메뉴를 입력해주세요!");
         // Menu 객체배열
+        // 추가 해주면 새로운 Product 객체배열 생성 +  118 라인에 object 배열도 추가해줘야함
         Menu[] menus = {
                 new Menu("김밥", "새로지운 밥으로 만든 김밥"),
                 new Menu("라면", "신라면 베이스로 끓인 라면"),
                 new Menu("우동", "일본장인이 만든 우동"),
                 new Menu("음료", "시원한 음료")
+                //new Menu("디저트","완벽한 후식")
         };
         // Product 객체배열
         Product[] kimbob = {
@@ -109,9 +111,13 @@ public class Main {
                 new Product("환타", "파인애플맛 환타", 1000),
                 new Product("물", "제주도 삼다수물 ", 1000)
         };
-        int selectProduct;
-        Product[][] productArr = {kimbob, ramen, udon, drinks}; // 객체 배열
+//        Product[] dessert = {
+//                new Product("케이크", "달콤한 생크림 케이크", 3000)
+//        };
+
+        Product[][] productArr = {kimbob, ramen, udon, drinks}; // 새로운 메뉴 추가시; 오브젝트도 추가해줘야함 dessert
         List<Order> orderList = new ArrayList<>();
+        int selectProduct;
 
         while (true) {
             printMenu(menus);
@@ -138,14 +144,17 @@ public class Main {
                     System.out.println("-------------- 음료정보 --------------");
                     break;
             }
-            // 1~4 범위안 (1. 김밥 2. 라면 3. 우동 4.음료)
-            if (selectMenu >= 1 && selectMenu <= 4) {
+
+            // 1~menus.length 범위안 (1. 김밥 2. 라면 3. 우동 4.음료, 5...)
+            if (selectMenu >= 1 && selectMenu <= menus.length) {
                 Product[] product = productArr[selectMenu - 1];
 
                 printProduct(product); // 선택한 상품정보 출력
                 System.out.print("입력: ");
                 selectProduct = sc.nextInt();
-                while (!(selectProduct >= 1) || !(selectProduct <= 4)) {
+
+                // 각 메뉴 범위
+                while (!(selectProduct >= 1) || !(selectProduct <= product.length)) {
                     System.out.println("1~4번 메뉴중에 선택해주세요");
                     selectProduct = sc.nextInt();
                 }
@@ -181,13 +190,13 @@ public class Main {
                 } else {
                     System.out.println("해당 상품을 장바구니에 넣지 않았습니다!");
                 }
-            } else if (selectMenu == 5) {
+            } else if (selectMenu == 7) {
                 printOrder(orderList);
             } // 총 장바구니 조히
-            else if (selectMenu == 6) {
+            else if (selectMenu == 8) {
                 orderList.clear();
             } // 장바구니 삭제
-            else if (selectMenu == 7) {
+            else if (selectMenu == 9) {
                 break;
             } // 프로그램 종료
         }
